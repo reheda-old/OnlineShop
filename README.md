@@ -1,2 +1,18 @@
 # OnlineShop
-Demo: <a href="http://vronlineshop.herokuapp.com/" target="_blank">http://vronlineshop.herokuapp.com/</a>
+
+### Demo
+http://vronlineshop.herokuapp.com/
+
+### Used Technologies
+* JSTL
+* EL
+* JSP
+* Hibernate
+* MySql / PostgreSql
+* Spring
+* JDBC
+* AJAX
+* Bootstrap
+* jQuery
+* Maven
+* Tomcat
