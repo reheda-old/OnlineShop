@@ -29,8 +29,29 @@ import java.util.Properties;
 @ComponentScan("ua.pp.hak.onlineshop.*")
 @EnableTransactionManagement
 // Load to Environment.
-@PropertySource("classpath:ds-hibernate-cfg.properties")
 public class ApplicationContextConfig {
+
+    @Configuration
+    @Profile("default")
+    @PropertySource("classpath:ds-hibernate-cfg.properties")
+    static class Defaults
+    { }
+
+    @Configuration
+    @Profile("heroku")
+    @PropertySource({"classpath:ds-hibernate-cfg.properties", "classpath:ds-hibernate-cfg-heroku.properties"})
+    static class Heroku
+    {
+        // nothing needed here if you are only overriding property values
+    }
+
+    @Configuration
+    @Profile("postgresql")
+    @PropertySource({"classpath:ds-hibernate-cfg.properties", "classpath:ds-hibernate-cfg-postgresql.properties"})
+    static class Postgresql
+    {
+        // nothing needed here if you are only overriding property values
+    }
 
     // The Environment class serves as the property holder
     // and stores all the properties loaded by the @PropertySource
@@ -64,25 +85,8 @@ public class ApplicationContextConfig {
         return commonsMultipartResolver;
     }
 
-    @Profile("default")
     @Bean(name = "dataSource")
     public DataSource getDataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-
-        // See: ds-hibernate-cfg.properties
-        dataSource.setDriverClassName(env.getProperty("ds.database-driver"));
-        dataSource.setUrl(env.getProperty("ds.url"));
-        dataSource.setUsername(env.getProperty("ds.username"));
-        dataSource.setPassword(env.getProperty("ds.password"));
-
-        System.out.println("## getDataSource: " + dataSource);
-
-        return dataSource;
-    }
-
-    @Profile("heroku")
-    @Bean(name = "dataSource")
-    public DataSource getHerokuDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
         // See: ds-hibernate-cfg.properties
