@@ -2,10 +2,7 @@ package ua.pp.hak.onlineshop.config;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -67,8 +64,25 @@ public class ApplicationContextConfig {
         return commonsMultipartResolver;
     }
 
+    @Profile("default")
     @Bean(name = "dataSource")
     public DataSource getDataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+
+        // See: ds-hibernate-cfg.properties
+        dataSource.setDriverClassName(env.getProperty("ds.database-driver"));
+        dataSource.setUrl(env.getProperty("ds.url"));
+        dataSource.setUsername(env.getProperty("ds.username"));
+        dataSource.setPassword(env.getProperty("ds.password"));
+
+        System.out.println("## getDataSource: " + dataSource);
+
+        return dataSource;
+    }
+
+    @Profile("heroku")
+    @Bean(name = "dataSource")
+    public DataSource getHerokuDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
         // See: ds-hibernate-cfg.properties
