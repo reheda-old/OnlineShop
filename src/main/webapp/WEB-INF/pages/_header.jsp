@@ -4,7 +4,7 @@
 
 <div class="header-container">
 
-    <div class="site-name"><a href="${pageContext.request.contextPath}">Online Shop</a></div>
+    <div class="site-name"><a href="${pageContext.request.contextPath}/">Online Shop</a></div>
 
     <div class="header-bar">
         <c:if test="${pageContext.request.userPrincipal.name != null}">
