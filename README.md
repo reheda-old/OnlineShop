@@ -1,6 +1,6 @@
 # OnlineShop
 
-### Demo
+### Demo (around 20 sec to start the server)
 http://vronlineshop.herokuapp.com/
 
 ### Used Technologies
